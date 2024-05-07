@@ -10,4 +10,4 @@ TODO:
   - Need to make it able to run multiple simulations with multiple lists of parameters to try.
 
 From a long simulation, seem to have gotten a large polar cyclone. It persisted for basically indefinitely after forming early into the simulation.
-![large_central_vortex](https://github.com/ONeillLab/2.5LayerPython/assets/168764017/5253b144-0bf9-4a88-bdd3-9fed8cd2a4b0)
+![large_central_vortex](https://github.com/ONeillLab/2.5LayerPython/assets/168764017/9f7fc426-3972-4420-a4d9-2e06184f21ef)
