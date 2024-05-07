@@ -4,6 +4,9 @@ import math
 
 
 def gauss(x, y, L):
+    """
+    Generates a Gaussian.
+    """
     g = np.exp(-0.5 * (x**2 + y**2) / L**2)
     return g
 
@@ -11,32 +14,34 @@ def gauss(x, y, L):
 def paircountN2(num, N):
     """
     Generates a list of coordinate pairs.
-
-    Args:
-        num (int): The number of coordinate pairs to generate.
-        N (int): The maximum value for the coordinates.
-
-    Returns:
-        numpy.ndarray: A 2D array of coordinate pairs.
     """
+    
     locs = np.ceil(np.random.rand(num, 2) * N).astype(int)
     return locs
 
 
 def pairfieldN2(L, dx, h1, wlayer):
+    """
+    Creates the weather matrix for the storms, S_st in paper.
+    """
     voldw = np.sum(np.sum(wlayer)) * dx**2
     area = L**2
     wcorrect = voldw / area
     Wmat = wlayer - wcorrect
-    # figure; pcolor(hlayer); hold on; shading flat
     return Wmat
 
 
 def Axl(f, l, r):
+    """
+    Redundant?
+    """
     fa = 0.5 * (f + f[:, l-1])
     return fa
 
 def Ayl(f, l, r):
+    """
+    Redundant?
+    """
     fa = 0.5 * (f + f[l-1, :])
     return fa
 
@@ -67,19 +72,19 @@ def viscND(vel, Re, n, l, l2, r, r2, dx):
     
 
 def pairshapeN2(locs, x, y, Br2, Wsh, N, dx):
-    # Solve for one gaussian shape first, with size determined by 'rad'
+    """
+    Create Gaussians on smaller scales and then convolve them with the weather layer.
+    """
     rad = int(np.ceil(np.sqrt(1/Br2) / dx))
     xg, yg = np.meshgrid(range(-rad, rad+1), range(-rad, rad+1))
     gaus = Wsh * np.exp(-(Br2 * dx**2) / 0.3606 * ((xg + 0.5)**2 + (yg + 0.5)**2))
     
-    # Create dh layer
     wlayer = np.zeros(x.shape)
     
     buf = rad
     bufmat = np.zeros((N + 2 * rad, N + 2 * rad))
     nlocs = locs + rad
     
-    # Read in center locations and apply to each center
     corners = nlocs - rad
 
     for jj in range(locs.shape[0]):
@@ -116,23 +121,20 @@ def pairshapeN2(locs, x, y, Br2, Wsh, N, dx):
 
 
 def BernN2(u1,v1,u2,v2,gm,c22h,c12h,h1,h2,ord,r):
+    """
+    Generates Bernstein polynomial
+    """
     if ord == 1:
         B1 = 'broke'
         B2 = 'broke'
     else:
-        #B1 = c12h*h1 + c22h*h2 + 0.25*(u1**2 + u1[:,r-1]**2 + v1**2 + v1[r-1,:]**2)
-
-        B1 = c12h*h1 + c22h*h2 + 0.25*(u1**2 + np.roll(u1, -1, axis=1)**2 + v1**2 + np.roll(v1, -1, axis=0)**2)
-
-        #B2 = gm*c12h*h1 + c22h*h2 + 0.25*(u1**2 + u1[:,r-1]**2 + v1**2 + v1[r-1,:]**2)
-        
+        B1 = c12h*h1 + c22h*h2 + 0.25*(u1**2 + np.roll(u1, -1, axis=1)**2 + v1**2 + np.roll(v1, -1, axis=0)**2)        
         B2 = gm*c12h*h1 + c22h*h2 + 0.25*(u1**2 + np.roll(u1, -1, axis=1)**2 + v1**2 + np.roll(v1, -1, axis=0)**2)
         
         return B1, B2
 
 
 def xflux(f, u, dx, dt, l, r):
-    #fl = f[:,l-1]
     fl = np.roll(f, 1, axis=1)
     fr = f
 
@@ -141,7 +143,6 @@ def xflux(f, u, dx, dt, l, r):
     return fa
 
 def yflux(f, v, dx, dt, l, r):
-    #fl = f[l-1,:]
     fl = np.roll(f, 1, axis=0)
     fr = f
 
