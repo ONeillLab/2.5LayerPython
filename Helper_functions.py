@@ -46,7 +46,7 @@ def Ayl(f, l, r):
     return fa
 
 
-def viscND(vel, Re, n, l, l2, r, r2, dx):
+def viscND(vel, Re, n, dx):
     """
         n is exponent of Laplacian operator
         Where visc term is nu*(-1)^(n+1) (\/^2)^n
@@ -134,7 +134,7 @@ def BernN2(u1,v1,u2,v2,gm,c22h,c12h,h1,h2,ord,r):
         return B1, B2
 
 
-def xflux(f, u, dx, dt, l, r):
+def xflux(f, u, dx, dt):
     fl = np.roll(f, 1, axis=1)
     fr = f
 
@@ -142,12 +142,11 @@ def xflux(f, u, dx, dt, l, r):
 
     return fa
 
-def yflux(f, v, dx, dt, l, r):
+def yflux(f, v, dx, dt):
     fl = np.roll(f, 1, axis=0)
     fr = f
 
     fa = 0.5 * v * (fl+fr)
 
     return fa
-
 
