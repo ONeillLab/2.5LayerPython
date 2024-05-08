@@ -9,5 +9,5 @@ TODO:
   - This is a very line by line translation. There are definitely optimizations to be made...
   - Need to make it able to run multiple simulations with multiple lists of parameters to try.
 
-From a long simulation, seem to have gotten a large polar cyclone. It persisted for basically indefinitely after forming early into the simulation.
-![large_central_vortex](https://github.com/ONeillLab/2.5LayerPython/assets/168764017/9f7fc426-3972-4420-a4d9-2e06184f21ef)
+From a long simulation, seem to have gotten a large polar cyclone. It persisted for basically indefinitely after forming early into the simulation. This is a high EpHat simulation with low a/LD2. So from [https://www.nature.com/articles/ngeo2459] we should expect this.
+![largeElowB](https://github.com/ONeillLab/2.5LayerPython/assets/168764017/c4e46b18-853b-41c7-b93e-a0070b084d40)
